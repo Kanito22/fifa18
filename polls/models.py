@@ -3,9 +3,21 @@ import datetime
 from django.db import models
 from django.utils import timezone
 
+
+class Team(models.Model):
+    team_text = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.team_text
+
+
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
+    score1 = models.IntegerField(null=True)
+    score2 = models.IntegerField(null=True)
+    team1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team1', default=1)
+    team2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team2', default=1)
 
     def __str__(self):
         return self.question_text
@@ -23,6 +35,8 @@ class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
+    score1 = models.IntegerField(default=0)
+    score2 = models.IntegerField(default=0)
 
     def __str__(self):
         return self.choice_text

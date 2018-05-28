@@ -7,9 +7,10 @@
     {% for question in latest_question_list %}
         <li><a href="{% url 'polls:detail' question.id %}">{{ question.team1 }}-{{ question.team2 }}</a>
         {% for choice in question.choice_set.all %}
-            {{ choice.score1 }}-{{ choice.score2 }}
+            bet:{{ choice.score1 }}-{{ choice.score2 }}
+            {{ choice.get_score }}
         {% endfor %}
-        {{ question.score1 }}-{{ question.score2 }}
+        final score:{{ question.score1 }}-{{ question.score2 }}
         </li>
     {% endfor %}
     </ul>

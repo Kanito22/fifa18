@@ -38,5 +38,20 @@ class Choice(models.Model):
     score1 = models.IntegerField(default=0)
     score2 = models.IntegerField(default=0)
 
+    def get_score(self):
+        diff1 = self.question.score1 - self.score1
+        diff2 = self.question.score2 - self.score2
+
+        if diff1 == 0 and diff2 == 0:
+            return 2 # perfect!
+        elif ((diff1 == diff2) or
+                (self.score1 > self.score2 and
+                self.question.score1 > self.question.score2) or
+                (self.score1 < self.score2 and
+                self.question.score1 < self.question.score2)):
+            return 1 # great!
+        else:
+            return 0 # sorry :(
+
     def __str__(self):
         return self.choice_text

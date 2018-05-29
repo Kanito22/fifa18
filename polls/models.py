@@ -39,6 +39,9 @@ class Choice(models.Model):
     score2 = models.IntegerField(default=0)
 
     def get_score(self):
+        if ((self.question.score1 is None) or
+                (self.question.score2 is None)):
+            return 0
         diff1 = self.question.score1 - self.score1
         diff2 = self.question.score2 - self.score2
 

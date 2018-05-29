@@ -20,6 +20,16 @@ class IndexView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:5]
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        all_entries = Choice.objects.all()
+        total_sum = 0
+        for entry in all_entries:
+            total_sum += entry.get_score()
+
+        context['number'] = total_sum
+        return context
 
 class DetailView(generic.DetailView):
     model = Question

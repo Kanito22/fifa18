@@ -1,14 +1,22 @@
 <h1>{{ question.team1 }}-{{ question.team2 }}</h1>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% if user.is_authenticated %}
 
-<form action="{% url 'polls:vote' question.id %}" method="post">
-{% csrf_token %}
-{% for choice in question.choice_set.all %}
-    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" checked="checked" />
-    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
-    <input type="text" name="score1" id="score1" value="{{ choice.score1 }}" />
-    <input type="text" name="score2" id="score2" value="{{ choice.score2 }}" />
-{% endfor %}
-<input type="submit" value="Vote" />
-</form>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <form action="{% url 'polls:vote' question.id %}" method="post">
+    {% csrf_token %}
+    {% for choice in question.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" checked="checked" />
+        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+        <input type="text" name="score1" id="score1" value="{{ choice.score1 }}" />
+        <input type="text" name="score2" id="score2" value="{{ choice.score2 }}" />
+    {% endfor %}
+    <input type="submit" value="Vote" />
+    </form>
+
+{% else %}
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">login</a> |
+    <a href="{% url 'signup' %}">signup</a>
+{% endif %}

@@ -2,22 +2,31 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
 
-total score: {{ number }}
+{% if user.is_authenticated %}
+    Hi {{ user.username }}! {{ user.team_id }}
+    <p><a href="{% url 'logout' %}">logout</a></p>
+    total score: {{ number }}
 
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.team1 }}-{{ question.team2 }}</a>
-        {% for choice in question.choice_set.all %}
-            bet: {{ choice.score1 }}-{{ choice.score2 }}
-            score: {{ choice.get_score }}
+    {% if latest_question_list %}
+        <ul>
+        {% for question in latest_question_list %}
+            <li><a href="{% url 'polls:detail' question.id %}">{{ question.team1 }}-{{ question.team2 }}</a>
+            {% for choice in question.choice_set.all %}
+                bet: {{ choice.score1 }}-{{ choice.score2 }}
+                score: {{ choice.get_score }}
+            {% endfor %}
+            final score: {{ question.score1 }}-{{ question.score2 }}
+            pub_date: {{ question.pub_date }}
+            has_started: {{ question.has_started }}
+            </li>
         {% endfor %}
-        final score: {{ question.score1 }}-{{ question.score2 }}
-        pub_date: {{ question.pub_date }}
-        has_started: {{ question.has_started }}
-        </li>
-    {% endfor %}
-    </ul>
+        </ul>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+
 {% else %}
-    <p>No polls are available.</p>
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">login</a> |
+    <a href="{% url 'signup' %}">signup</a>
 {% endif %}

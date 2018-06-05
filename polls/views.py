@@ -24,7 +24,7 @@ class IndexView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        all_entries = Choice.objects.all()
+        all_entries = Choice.objects.filter(user_id=self.request.user.id)
         total_sum = 0
         for entry in all_entries:
             total_sum += entry.get_score()
@@ -43,27 +43,38 @@ class DetailView(generic.DetailView):
         #return Question.objects.filter(pub_date__lte=timezone.now())
         return Question.objects.all()
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        all_entries = Choice.objects.filter(user_id=self.request.user.id, question_id=context['question'].id)
+
+        context['all_entries'] = all_entries
+
+        return context
+
 
 class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
 
 def vote(request, question_id):
+    current_user = request.user
     question = get_object_or_404(Question, pk=question_id)
     try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+        selected_choice = question.choice_set.get(user_id=current_user.id)
     except (KeyError, Choice.DoesNotExist):
+        selected_choice = question.choice_set.create(user_id=current_user.id)
         # Redisplay the question voting form.
-        return render(request, 'polls/detail.html', {
-            'question': question,
-            'error_message': "You didn't select a choice.",
-        })
-    else:
-        # selected_choice.votes += 1
-        selected_choice.score1 = request.POST['score1']
-        selected_choice.score2 = request.POST['score2']
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        #return render(request, 'polls/detail.html', {
+        #    'question': question,
+        #    'error_message': "You didn't select a choice.",
+        #})
+    #else:
+    # selected_choice.votes += 1
+    selected_choice.score1 = request.POST['score1']
+    selected_choice.score2 = request.POST['score2']
+    selected_choice.save()
+    # Always return an HttpResponseRedirect after successfully dealing
+    # with POST data. This prevents data from being posted twice if a
+    # user hits the Back button.
+    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))

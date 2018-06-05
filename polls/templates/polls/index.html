@@ -3,7 +3,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
 
 {% if user.is_authenticated %}
-    Hi {{ user.username }}! {{ user.team_id }}
+    Hi {{ user.username }}! user_id={{ user.id }}
     <p><a href="{% url 'logout' %}">logout</a></p>
     total score: {{ number }}
 
@@ -12,8 +12,10 @@
         {% for question in latest_question_list %}
             <li><a href="{% url 'polls:detail' question.id %}">{{ question.team1 }}-{{ question.team2 }}</a>
             {% for choice in question.choice_set.all %}
-                bet: {{ choice.score1 }}-{{ choice.score2 }}
-                score: {{ choice.get_score }}
+                {% if user.id == choice.user_id %}
+                    bet: {{ choice.score1 }}-{{ choice.score2 }}
+                    score: {{ choice.get_score }}
+                {% endif %}
             {% endfor %}
             final score: {{ question.score1 }}-{{ question.score2 }}
             pub_date: {{ question.pub_date }}

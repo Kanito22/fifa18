@@ -43,6 +43,7 @@ class Choice(models.Model):
     votes = models.IntegerField(default=0)
     score1 = models.IntegerField(default=0)
     score2 = models.IntegerField(default=0)
+    user = models.ForeignKey('users.Customuser', on_delete=models.CASCADE, default=1)
 
     def get_score(self):
         if ((self.question.score1 is None) or

@@ -6,21 +6,31 @@
 
     <form action="{% url 'polls:vote' question.id %}" method="post">
     {% csrf_token %}
+    <table style="width:50%">
     {% if all_entries %}
         {% for choice in all_entries %}
-            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" checked="checked" />
-            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
-            <input type="text" name="score1" id="score1" value="{{ choice.score1 }}" />
-            <input type="text" name="score2" id="score2" value="{{ choice.score2 }}" />
+        <tr>
+            <td>{{ question.team1 }}</td>
+            <td><input type="text" name="score1" id="score1" value="{{ choice.score1 }}" /></td>
+        </tr>
+        <tr>
+            <td>{{ question.team2 }}</td>
+            <td><input type="text" name="score2" id="score2" value="{{ choice.score2 }}" /></td>
+        </tr>
         {% endfor %}
     {% else %}
-        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" checked="checked" />
-        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
-        <input type="text" name="score1" id="score1" value="{{ choice.score1 }}" />
-        <input type="text" name="score2" id="score2" value="{{ choice.score2 }}" />
+        <tr>
+            <td>{{ question.team1 }}</td>
+            <td><input type="text" name="score1" id="score1" value="{{ choice.score1 }}" /></td>
+        </tr>
+        <tr>
+            <td>{{ question.team2 }}</td>
+            <td><input type="text" name="score2" id="score2" value="{{ choice.score2 }}" /></td>
+        </tr>
     {% endif %}
-    
-    <input type="submit" value="Vote" />
+    </table>
+
+    <p><input type="submit" value="Vote" /></p>
     </form>
 
 {% else %}

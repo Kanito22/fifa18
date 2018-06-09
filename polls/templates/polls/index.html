@@ -3,26 +3,29 @@
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
 
 {% if user.is_authenticated %}
-    Hi {{ user.username }}!
-    <p><a href="{% url 'logout' %}">logout</a></p>
-    <p>Total bet score: {{ number }}</p>
+    <h3>Bienvenido {{ user.username }}!</h3>
 
-    <p>All bets are on game results after 90 minutes. You can't bet on a game that has already started.</p>
+    <p><a href="{% url 'logout' %}">logout</a></p>
+    
+    <p>Puntaje total de las apuestas: {{ number }}</p>
+
+    <ul>
+        <li>Todas las apuestas son validas solo para los resultados de los partidos dentro de los 90 minutos. Lo cual quiere decir que no podras apostar a resultados de alargue de partidos o penales.</li>
+        <li>Ni se podra apostar a un partido que ya ha comenzado.</li>
+    </ul>
 
     {% if latest_question_list %}
         <table style="width:100%">
-            <th>Game</th>
-            <th>Game score</th>
-            <th>Playoff</th>
-            <th>Started?</th>
-            <th>Bet</th>
-            <th>Bet score</th>
+            <th>Partido</th>
+            <th>Resultado del partido</th>
+            <th>Comienzo del partido</th>
+            <th>Apuesta</th>
+            <th>Puntaje de apuesta</th>
         {% for question in latest_question_list %}
             <tr>
             <td><a href="{% url 'polls:detail' question.id %}">{{ question.team1 }}-{{ question.team2 }}</a></td>
             <td>{{ question.score1 }}-{{ question.score2 }}</td>
             <td>{{ question.pub_date }}</td>
-            <td>{{ question.has_started }}</td>
             {% for choice in question.choice_set.all %}
                 {% if user.id == choice.user_id %}
                     <td>{{ choice.score1 }}-{{ choice.score2 }}</td>

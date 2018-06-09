@@ -2,6 +2,7 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
+import pytz
 
 
 class Team(models.Model):
@@ -28,10 +29,16 @@ class Question(models.Model):
 
     def has_started(self):
         now = timezone.now()
-        #now = timezone.localtime(timezone.now())
-        print('%s <= %s' % (self.pub_date, now - datetime.timedelta(minutes=5)))
-        return self.pub_date <= now - datetime.timedelta(minutes=5)
-    
+        print('%s <= %s' % (self.pub_date, now))
+        return self.pub_date <= now
+
+    def playoff(self):
+        d = self.pub_date
+        est=pytz.timezone('America/La_Paz')
+        local = d.astimezone(est).replace(tzinfo=None)
+        #print(local)
+        return local
+
     was_published_recently.admin_order_field = 'pub_date'
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Published recently?'

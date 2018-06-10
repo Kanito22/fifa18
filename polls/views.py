@@ -60,7 +60,7 @@ class ResultsView(generic.DetailView):
 def vote(request, question_id):
     current_user = request.user
     question = get_object_or_404(Question, pk=question_id)
-    if question.has_started:
+    if question.has_started():
         return render(request, 'polls/detail.html', {
             'question': question,
             'error_message': "No puedes apostar a un partido que ya ha comenzado.",

@@ -9,12 +9,18 @@
     
     <p>Puntaje total de las apuestas: {{ number }}</p>
 
-    <ul>
-        <li>Una apuesta en el equipo ganador da 1 punto. Por ejemplo, si apuestas 2-1 y el juego termina 3-1 o si apuestas 1-1 y el juego termina 2-2</li>
-        <li>Una apuesta en el resultado correcto da 2 puntos</li>
-        <li>Todas las demás apuestas dan 0 puntos</li>
-        <li>Ni se podra apostar a un partido que ya ha comenzado</li>
-    </ul>
+    <!--ul>
+        <li></li>
+
+            A correct bet gives 2 points
+
+            Betting on the correct winner gives 1 point. For example, if you bet 2-1 and the game 3-1 gives 1 point. Or, if you bet 1-1 and the game ends 2-2 also gives 1 point
+
+            All bets are on game result when the game ends after 90 minutes, i.e. game result before eventual game extension or penalties. 
+
+            You can't bet on a game that has started. Clicking a started game shows all user bets
+
+    </ul-->
 
     {% if latest_question_list %}
         <table style="width:100%">

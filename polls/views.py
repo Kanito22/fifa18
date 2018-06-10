@@ -5,6 +5,7 @@ from django.views import generic
 from django.utils import timezone
 
 from .models import Choice, Question
+from users.models import CustomUser
 
 
 class IndexView(generic.ListView):
@@ -49,6 +50,17 @@ class DetailView(generic.DetailView):
         all_entries = Choice.objects.filter(user_id=self.request.user.id, question_id=context['question'].id)
 
         context['all_entries'] = all_entries
+
+        entries = Choice.objects.filter(question_id=context['question'].id)
+        
+        d = {}
+        for entry in entries:
+            user = CustomUser.objects.get(id=entry.user.id)
+            d[user.username] = '%s-%s' % (entry.score1, entry.score2)
+        
+        print(d)
+
+        context['d'] = d
 
         return context
 

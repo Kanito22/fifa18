@@ -3,6 +3,8 @@ import datetime
 from django.db import models
 from django.utils import timezone
 import pytz
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Team(models.Model):
@@ -15,8 +17,8 @@ class Team(models.Model):
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
-    score1 = models.IntegerField(null=True)
-    score2 = models.IntegerField(null=True)
+    score1 = models.IntegerField(null=True, blank=True)
+    score2 = models.IntegerField(null=True, blank=True)
     team1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team1', default=1)
     team2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team2', default=1)
 
@@ -72,3 +74,24 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
+
+
+class Score(models.Model):
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
+    score = models.IntegerField(default=0)
+
+    #def __str__(self):
+    #    return self.team_text
+
+
+# method for updating
+@receiver(post_save, sender=Question, dispatch_uid="update_stock_count")
+def update_stock(sender, instance, **kwargs):
+    
+    all_entries = Choice.objects.all()
+
+    for entry in all_entries:
+        #print('%s, %s, %s' % (entry.id, entry.get_score(), entry.user_id))
+        p = Score(choice_id=entry.id, score=entry.get_score())
+        p.save()
+        #print(p.score)

@@ -33,6 +33,17 @@
     <p><input type="submit" value="Apuestá" /></p>
     </form>
 
+    <table style="width:20%">
+    {% if question.has_started %}
+        {% for key, value in d.items %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>{{ value }}</td>
+        </tr>
+        {% endfor %}
+    {% endif %}
+    </table>
+
 {% else %}
     <p>You are not logged in</p>
     <a href="{% url 'login' %}">login</a> |

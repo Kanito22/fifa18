@@ -1,3 +1,7 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+
 <h1>{{ question.team1 }}-{{ question.team2 }}</h1>
 
 {% if user.is_authenticated %}
@@ -33,16 +37,21 @@
     <p><input type="submit" value="Apuestá" /></p>
     </form>
 
-    <table style="width:20%">
-    {% if question.has_started %}
-        {% for key, value in d.items %}
-        <tr>
-            <td>{{ key }}</td>
-            <td>{{ value }}</td>
-        </tr>
-        {% endfor %}
-    {% endif %}
+    <div style="overflow-x:auto;">
+    <table>
+        <caption>Apuestas</caption>
+    <tr>
+        <th>Usuario</th>
+        <th>Apuesta</th>
+    </tr>
+    {% for key, value in d.items %}
+    <tr>
+        <td>{{ key }}</td>
+        <td>{{ value }}</td>
+    </tr>
+    {% endfor %}
     </table>
+    </div>
 
 {% else %}
     <p>You are not logged in</p>

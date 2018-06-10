@@ -7,6 +7,20 @@
 
     <p><a href="{% url 'logout' %}">logout</a></p>
     
+    <h4>Ranking</h4>
+    <table style="width:20%">
+    <tr>
+        <th>Usuario</th>
+        <th>Puntos</th>
+    </tr>
+    {% for key, value in d.items %}
+    <tr>
+        <td>{{ key }}</td>
+        <td>{{ value }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+
     <p>Puntaje total de las apuestas: {{ number }}</p>
 
     <!--ul>

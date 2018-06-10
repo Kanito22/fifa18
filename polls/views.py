@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 
-from .models import Choice, Question
+from .models import Choice, Question, Score
 from users.models import CustomUser
 
 
@@ -31,6 +31,24 @@ class IndexView(generic.ListView):
             total_sum += entry.get_score()
 
         context['number'] = total_sum
+
+        entries = Score.objects.all()
+        
+        d = {}
+        for entry in entries:
+            choice = Choice.objects.get(id=entry.choice_id)
+            user = CustomUser.objects.get(id=choice.user_id)
+            key = user.username
+
+            if key in d:
+                d[key] += entry.score
+            else:
+                d[key] = entry.score
+        
+        print(d)
+
+        context['d'] = d
+
         return context
 
 class DetailView(generic.DetailView):

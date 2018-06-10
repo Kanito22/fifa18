@@ -77,7 +77,7 @@ class Choice(models.Model):
 
 
 class Score(models.Model):
-    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
+    choice = models.OneToOneField(Choice, on_delete=models.CASCADE, primary_key=True)
     score = models.IntegerField(default=0)
 
     #def __str__(self):
@@ -94,4 +94,4 @@ def update_stock(sender, instance, **kwargs):
         #print('%s, %s, %s' % (entry.id, entry.get_score(), entry.user_id))
         p = Score(choice_id=entry.id, score=entry.get_score())
         p.save()
-        #print(p.score)
+        print(p.score)

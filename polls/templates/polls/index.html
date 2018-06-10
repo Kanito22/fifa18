@@ -8,7 +8,8 @@
     <p><a href="{% url 'logout' %}">logout</a></p>
     
     <h4>Ranking</h4>
-    <table style="width:20%">
+    <div style="overflow-x:auto;">
+    <table>
     <tr>
         <th>Usuario</th>
         <th>Puntos</th>
@@ -20,6 +21,7 @@
     </tr>
     {% endfor %}
     </table>
+    </div>
 
     <p>Has apostado al campeón:: {{ user.team }}</p>
 
@@ -37,13 +39,16 @@
     </ul-->
 
     {% if latest_question_list %}
-        <table style="width:100%">
-            <th>Partido</th>
-            <th>Resultado del partido</th>
-            <th>Comienzo del partido</th>
-            <th>Apuesta</th>
-            <th>Puntaje de apuesta</th>
-        {% for question in latest_question_list %}
+        <div style="overflow-x:auto;">
+        <table>
+            <tr>
+                <th>Partido</th>
+                <th>Resultado del partido</th>
+                <th>Comienzo del partido</th>
+                <th>Apuesta</th>
+                <th>Puntaje de apuesta</th>
+            </tr>
+            {% for question in latest_question_list %}
             <tr>
             <td><a href="{% url 'polls:detail' question.id %}">{{ question.team1 }}-{{ question.team2 }}</a></td>
             <td>{{ question.score1 }}-{{ question.score2 }}</td>
@@ -62,6 +67,8 @@
             {% endfor %}
             </tr>
         {% endfor %}
+        </table>
+    </div>
 
     {% else %}
         <p>No polls are available.</p>

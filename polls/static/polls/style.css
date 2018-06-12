@@ -10,6 +10,11 @@ h1 {
     font-family: 'Lobster';
 }
 
+#grad {
+    background: linear-gradient(white, blue, red);
+    color: white;
+}
+
 table {
     border-collapse: collapse;
 }

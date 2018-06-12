@@ -43,6 +43,7 @@
     <p><input type="submit" value="Apuestá" /></p>
     </form>
 
+    {% if question.has_started %}
     <div style="overflow-x:auto;">
     <table>
     <tr>
@@ -57,6 +58,7 @@
     {% endfor %}
     </table>
     </div>
+    {% endif %}
 
 {% else %}
     <p>You are not logged in</p>

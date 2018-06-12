@@ -2,6 +2,10 @@
     font-family: 'Gudea';
 }
 
+body {
+    background-color: lightblue;
+}
+
 h1 {
     font-family: 'Lobster';
 }

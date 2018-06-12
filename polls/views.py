@@ -93,7 +93,7 @@ def vote(request, question_id):
     if question.has_started():
         return render(request, 'polls/detail.html', {
             'question': question,
-            'error_message': "No puedes apostar a un partido que ya ha comenzado.",
+            'error_message': "No puedes hacer tu apuesta sí el partido ya ha comenzado.",
         })
     try:
         selected_choice = question.choice_set.get(user_id=current_user.id)

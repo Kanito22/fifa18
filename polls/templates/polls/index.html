@@ -11,7 +11,6 @@
     
     <div style="overflow-x:auto;">
     <table>
-        <caption>Ranking</caption>
     <tr>
         <th>Usuario</th>
         <th>Puntos</th>
@@ -19,41 +18,27 @@
     {% for key, value in d.items %}
     <tr>
         <td>{{ key }}</td>
-        <td>{{ value }}</td>
+        <td align="center">{{ value }}</td>
     </tr>
     {% endfor %}
     </table>
     </div>
 
-    <p>Has apostado al campeón:: {{ user.team }}</p>
-
-    <!--ul>
-        <li></li>
-
-            A correct bet gives 2 points
-
-            Betting on the correct winner gives 1 point. For example, if you bet 2-1 and the game 3-1 gives 1 point. Or, if you bet 1-1 and the game ends 2-2 also gives 1 point
-
-            All bets are on game result when the game ends after 90 minutes, i.e. game result before eventual game extension or penalties. 
-
-            You can't bet on a game that has started. Clicking a started game shows all user bets
-
-    </ul-->
+    <p>Has apostado como campeón a: {{ user.team }}</p>
 
     {% if latest_question_list %}
         <div style="overflow-x:auto;">
         <table>
             <tr>
                 <th>Partido</th>
-                <th>Resultado del partido</th>
-                <th>Comienzo del partido</th>
+                <th>Fecha</th>
+                <th>Resultado</th>
                 <th>Apuesta</th>
-                <th>Puntaje de apuesta</th>
+                <th>Puntos</th>
             </tr>
             {% for question in latest_question_list %}
             <tr>
             <td><a href="{% url 'polls:detail' question.id %}">{{ question.team1 }}-{{ question.team2 }}</a></td>
-            <td>{{ question.score1 }}-{{ question.score2 }}</td>
             <td>
                 {% if question.has_started %}
                     <strike>{{ question.playoff }}</strike>
@@ -61,10 +46,11 @@
                     {{ question.playoff }}
                 {% endif %}
             </td>
+            <td align="center">{{ question.score1 }}-{{ question.score2 }}</td>
             {% for choice in question.choice_set.all %}
                 {% if user.id == choice.user_id %}
-                    <td>{{ choice.score1 }}-{{ choice.score2 }}</td>
-                    <td>{{ choice.get_score }}</td>
+                    <td align="center">{{ choice.score1 }}-{{ choice.score2 }}</td>
+                    <td align="center">{{ choice.get_score }}</td>
                 {% endif %}
             {% endfor %}
             </tr>

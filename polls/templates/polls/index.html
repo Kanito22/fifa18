@@ -21,7 +21,7 @@
         <th>Usuario</th>
         <th>Puntos</th>
     </tr>
-    {% for key, value in d.items %}
+    {% for key, value in sorted_d %}
     <tr>
         <td>{{ key }}</td>
         <td align="center">{{ value }}</td>

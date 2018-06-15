@@ -7,6 +7,7 @@ from django.utils import timezone
 from .models import Choice, Question, Score
 from users.models import CustomUser
 
+import operator
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -45,9 +46,9 @@ class IndexView(generic.ListView):
             else:
                 d[key] = entry.score
         
-        print(d)
+        sorted_d = sorted(d.items(), key=operator.itemgetter(1), reverse=True)
 
-        context['d'] = d
+        context['sorted_d'] = sorted_d
 
         return context
 

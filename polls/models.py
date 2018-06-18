@@ -31,14 +31,12 @@ class Question(models.Model):
 
     def has_started(self):
         now = timezone.now()
-        print('%s <= %s' % (self.pub_date, now))
         return self.pub_date <= now
 
     def playoff(self):
         d = self.pub_date
         est=pytz.timezone('America/La_Paz')
         local = d.astimezone(est).replace(tzinfo=None)
-        #print(local)
         return local
 
     was_published_recently.admin_order_field = 'pub_date'
@@ -91,7 +89,5 @@ def update_stock(sender, instance, **kwargs):
     all_entries = Choice.objects.all()
 
     for entry in all_entries:
-        #print('%s, %s, %s' % (entry.id, entry.get_score(), entry.user_id))
         p = Score(choice_id=entry.id, score=entry.get_score())
         p.save()
-        print(p.score)

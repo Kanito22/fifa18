@@ -76,8 +76,6 @@ class DetailView(generic.DetailView):
         for entry in entries:
             user = CustomUser.objects.get(id=entry.user.id)
             d[user.username] = '%s-%s' % (entry.score1, entry.score2)
-        
-        print(d)
 
         context['d'] = d
 

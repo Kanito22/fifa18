@@ -11,4 +11,6 @@ class QuestionAdmin(admin.ModelAdmin):
         ('scores', {'fields': ['score1', 'score2']}),
     ]
 
+    list_display = ('question_text', 'team1', 'team2', 'pub_date')
+
 admin.site.register(Question, QuestionAdmin)

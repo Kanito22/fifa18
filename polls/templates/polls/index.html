@@ -18,13 +18,15 @@
     <div style="overflow-x:auto;">
     <table>
     <tr>
+        <th>Posición</th>
         <th>Usuario</th>
         <th>Puntos</th>
     </tr>
-    {% for key, value in sorted_d %}
+    {% for pos, name, points in tuple_list %}
     <tr>
-        <td>{{ key }}</td>
-        <td align="center">{{ value }}</td>
+        <td align="center">{{ pos }}</td>
+        <td>{{ name }}</td>
+        <td align="center">{{ points }}</td>
     </tr>
     {% endfor %}
     </table>

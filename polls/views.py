@@ -51,7 +51,18 @@ class IndexView(generic.ListView):
         
         sorted_d = sorted(d.items(), key=operator.itemgetter(1), reverse=True)
 
-        context['sorted_d'] = sorted_d
+        tuple_list = []
+        pos = 1
+        prev_points = sorted_d[0][1]
+        for item in sorted_d:
+            name = item[0]
+            points = item[1]
+            if prev_points > points:
+                pos = pos + 1
+            tuple_list.append((pos, name, points))
+            prev_points = points
+
+        context['tuple_list'] = tuple_list
 
         return context
 

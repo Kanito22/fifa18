@@ -23,7 +23,7 @@ class IndexView(generic.ListView):
         #    pub_date__lte=timezone.now()
         #).order_by('-pub_date')[:5]
         return Question.objects.filter(
-            pub_date__lte=timezone.now()+timedelta(days=3)
+            pub_date__lte=timezone.now()+timedelta(days=2)
         ).order_by('pub_date')
 
     def get_context_data(self, **kwargs):
@@ -76,7 +76,7 @@ class DetailView(generic.DetailView):
         """
         #return Question.objects.filter(pub_date__lte=timezone.now())
         return Question.objects.filter(
-            pub_date__lte=timezone.now()+timedelta(days=3)
+            pub_date__lte=timezone.now()+timedelta(days=2)
         )
 
     def get_context_data(self, **kwargs):

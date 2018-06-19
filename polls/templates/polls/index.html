@@ -22,10 +22,10 @@
         <th>Usuario</th>
         <th>Puntos</th>
     </tr>
-    {% for pos, name, points in tuple_list %}
+    {% for pos, name, team, points in tuple_list %}
     <tr>
         <td align="center">#{{ pos }}</td>
-        <td>{{ name }}</td>
+        <td>{{ name }} <img src="//flagpedia.net/data/flags/mini/{{ team }}.png" width="15" height="10" /></td>
         <td align="center">{{ points }}</td>
     </tr>
     {% endfor %}

@@ -51,15 +51,22 @@ class IndexView(generic.ListView):
         
         sorted_d = sorted(d.items(), key=operator.itemgetter(1), reverse=True)
 
+        flags = {1:'de', 3:'ar', 6:'br', 13:'es', 14:'fr', 26:'ru'}
+
         tuple_list = []
         pos = 1
         prev_points = sorted_d[0][1]
         for item in sorted_d:
             name = item[0]
             points = item[1]
+            user = CustomUser.objects.get(username=name)
+            if user.team.id in flags:
+                team = flags[user.team.id]
+            else:
+                team = 'noflag'
             if prev_points > points:
                 pos = pos + 1
-            tuple_list.append((pos, name, points))
+            tuple_list.append((pos, name, team, points))
             prev_points = points
 
         context['tuple_list'] = tuple_list

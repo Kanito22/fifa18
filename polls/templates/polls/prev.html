@@ -9,33 +9,8 @@
 <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'>
 
 {% if user.is_authenticated %}
-    <h1 id="grad">wistusrusia.com</h1>
-
-    <h3>Bienvenido {{ user.username }}!</h3>
-
-    <p><a href="{% url 'logout' %}">cerrar sesión</a></p>
+    <h1>Partidos anteriores</h1>
     
-    <div style="overflow-x:auto;">
-    <table>
-    <tr>
-        <th>Posición</th>
-        <th>Usuario</th>
-        <th>Puntos</th>
-    </tr>
-    {% for pos, name, team, points in tuple_list %}
-    <tr>
-        <td align="center">#{{ pos }}</td>
-        <td>{{ name }} <img src="//flagpedia.net/data/flags/mini/{{ team }}.png" width="15" height="10" /></td>
-        <td align="center">{{ points }}</td>
-    </tr>
-    {% endfor %}
-    </table>
-    </div>
-
-    <p>Has apostado como campeón a: {{ user.team }}</p>
-
-    <p><a href="{% url 'polls:prev' %}">Partidos anteriores</a></p>
-
     {% if latest_question_list %}
         <div style="overflow-x:auto;">
         <table>

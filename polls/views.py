@@ -10,6 +10,21 @@ from users.models import CustomUser
 
 import operator
 
+class PrevView(generic.ListView):
+    template_name = 'polls/prev.html'
+    context_object_name = 'latest_question_list'
+
+    def get_queryset(self):
+        return Question.objects.filter(
+            pub_date__lt=timezone.now()-timedelta(days=1)
+        ).order_by('pub_date')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        return context
+
+
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
@@ -23,6 +38,8 @@ class IndexView(generic.ListView):
         #    pub_date__lte=timezone.now()
         #).order_by('-pub_date')[:5]
         return Question.objects.filter(
+            pub_date__gte=timezone.now()-timedelta(days=1)
+        ).filter(
             pub_date__lte=timezone.now()+timedelta(days=2)
         ).order_by('pub_date')
 

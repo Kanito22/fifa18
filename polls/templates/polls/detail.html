@@ -19,11 +19,31 @@
     <table style="width:30%">
         <tr>
             <td>{{ question.team1 }}</td>
-            <td><input type="text" name="score1" id="score1" value="{{ score1 }}" /></td>
+            <td>
+                <select name="score1" id="score1">
+                {% for item in score_range %}
+                    {% if item == score1 %}
+                        <option selected="selected" value="{{ item }}">{{ item }}</option>
+                    {% else %}
+                        <option value="{{ item }}">{{ item }}</option>
+                    {% endif %}
+                {% endfor %}
+                </select>
+            </td>
         </tr>
         <tr>
             <td>{{ question.team2 }}</td>
-            <td><input type="text" name="score2" id="score2" value="{{ score2 }}" /></td>
+            <td>
+                <select name="score2" id="score2">
+                {% for item in score_range %}
+                    {% if item == score2 %}
+                        <option selected="selected" value="{{ item }}">{{ item }}</option>
+                    {% else %}
+                        <option value="{{ item }}">{{ item }}</option>
+                    {% endif %}
+                {% endfor %}
+                </select>
+            </td>
         </tr>
     </table>
 

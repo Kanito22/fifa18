@@ -112,6 +112,8 @@ class DetailView(generic.DetailView):
             context['score1'] = entry.score1
             context['score2'] = entry.score2
 
+        context['score_range'] = list(range(0, 10))
+
         entries = Choice.objects.filter(question_id=context['question'].id)
         
         d = {}

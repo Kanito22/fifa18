@@ -108,7 +108,9 @@ class DetailView(generic.DetailView):
 
         all_entries = Choice.objects.filter(user_id=self.request.user.id, question_id=context['question'].id)
 
-        context['all_entries'] = all_entries
+        for entry in all_entries:
+            context['score1'] = entry.score1
+            context['score2'] = entry.score2
 
         entries = Choice.objects.filter(question_id=context['question'].id)
         

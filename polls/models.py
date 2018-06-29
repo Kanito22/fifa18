@@ -34,6 +34,12 @@ class Question(models.Model):
         now = timezone.now()
         return self.pub_date <= now
 
+    def has_results(self):
+        if self.score1 or self.score2:
+            return True
+        else:
+            return False
+
     def playoff(self):
         d = self.pub_date
         est=pytz.timezone('America/La_Paz')
@@ -43,6 +49,8 @@ class Question(models.Model):
     was_published_recently.admin_order_field = 'pub_date'
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Published recently?'
+
+    has_results.boolean = True
 
 
 class Choice(models.Model):

@@ -11,7 +11,7 @@ class QuestionAdmin(admin.ModelAdmin):
         ('scores', {'fields': ['score1', 'score2']}),
     ]
 
-    list_display = ('question_text', 'team1', 'team2', 'pub_date')
+    list_display = ('has_results', 'team1', 'team2', 'pub_date', 'question_text')
 
 
 class TeamAdmin(admin.ModelAdmin):

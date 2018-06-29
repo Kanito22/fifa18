@@ -9,6 +9,7 @@ from django.dispatch import receiver
 
 class Team(models.Model):
     team_text = models.CharField(max_length=200)
+    winner = models.BooleanField(default=False)
 
     def __str__(self):
         return self.team_text

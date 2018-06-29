@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Question
+from .models import Question, Team
 
 
 class QuestionAdmin(admin.ModelAdmin):
@@ -13,4 +13,15 @@ class QuestionAdmin(admin.ModelAdmin):
 
     list_display = ('question_text', 'team1', 'team2', 'pub_date')
 
+
+class TeamAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,               {'fields': ['team_text', 'winner']}),
+    ]
+
+    list_display = ('team_text', 'winner')
+
+
 admin.site.register(Question, QuestionAdmin)
+
+admin.site.register(Team, TeamAdmin)

@@ -5,7 +5,7 @@ from django.views import generic
 from django.utils import timezone
 from datetime import timedelta
 
-from .models import Choice, Question, Score
+from .models import Choice, Question, Score, Team
 from users.models import CustomUser
 
 import operator
@@ -65,7 +65,14 @@ class IndexView(generic.ListView):
                 d[key] += entry.score
             else:
                 d[key] = entry.score
-        
+                
+        for key, value in d.items():
+            user = CustomUser.objects.get(username=key)
+            team = Team.objects.get(id=user.team_id)
+
+            if team.winner:
+                d[key] += 5
+
         sorted_d = sorted(d.items(), key=operator.itemgetter(1), reverse=True)
 
         flags = {1:'de', 3:'ar', 6:'br', 13:'es', 14:'fr', 26:'ru'}

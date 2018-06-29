@@ -35,10 +35,10 @@ class Question(models.Model):
         return self.pub_date <= now
 
     def has_results(self):
-        if self.score1 or self.score2:
-            return True
-        else:
+        if self.score1 is None or self.score2 is None:
             return False
+        else:
+            return True
 
     def playoff(self):
         d = self.pub_date

@@ -32,7 +32,13 @@
     </table>
     </div>
 
-    <p>Has apostado como campeón a: {{ user.team }}</p>
+    <p>Has apostado como campeón a: {{ user.team }}
+        {% if user.team.winner %}
+            +5
+        {% else %}
+            +0
+        {% endif %}
+    </p>
 
     <p><a href="{% url 'polls:prev' %}">Partidos anteriores</a></p>
 

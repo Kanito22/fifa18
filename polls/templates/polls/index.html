@@ -56,7 +56,11 @@
                     {{ question.playoff }}
                 {% endif %}
             </td>
-            <td align="center">{{ question.score1 }}-{{ question.score2 }}</td>
+            <td align="center">{{ question.score1 }}-{{ question.score2 }}
+                {% if question.score1_final %}
+                    ({{ question.score1_final }}-{{ question.score2_final }})
+                {% endif %}
+            </td>
             {% for choice in question.choice_set.all %}
                 {% if user.id == choice.user_id %}
                     <td align="center">{{ choice.score1 }}-{{ choice.score2 }}</td>

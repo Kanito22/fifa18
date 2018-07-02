@@ -9,6 +9,7 @@ class QuestionAdmin(admin.ModelAdmin):
         ('Date information', {'fields': ['pub_date']}),
         ('teams', {'fields': ['team1', 'team2']}),
         ('scores', {'fields': ['score1', 'score2']}),
+        ('scores_final', {'fields': ['score1_final', 'score2_final']}),
     ]
 
     list_display = ('has_results', 'team1', 'team2', 'pub_date', 'question_text')

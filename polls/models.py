@@ -20,6 +20,8 @@ class Question(models.Model):
     pub_date = models.DateTimeField('date published')
     score1 = models.IntegerField(null=True, blank=True)
     score2 = models.IntegerField(null=True, blank=True)
+    score1_final = models.IntegerField(null=True, blank=True)
+    score2_final = models.IntegerField(null=True, blank=True)
     team1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team1', default=1)
     team2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team2', default=1)
 

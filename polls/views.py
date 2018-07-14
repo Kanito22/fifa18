@@ -95,6 +95,9 @@ class IndexView(generic.ListView):
 
         context['tuple_list'] = tuple_list
 
+        has_winner = Team.objects.filter(winner=True).first()
+        context['has_winner'] = has_winner
+
         return context
 
 class DetailView(generic.DetailView):
